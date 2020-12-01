@@ -461,6 +461,7 @@
                 "success": function (data) {
                     if (data != null) {
                         console.log("data : " + data);
+                        dataTable.clear(); // 清楚数据
                         dataTable.data(data);
                     }
                 }
