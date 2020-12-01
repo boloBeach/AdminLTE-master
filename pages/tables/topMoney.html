@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | DataTables</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link">
+      <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">股票筛选系统</span>
+    </a>
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item menu-open">
+          <a href="#" class="nav-link active">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              股票信息
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="../tables/topMoney.html" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>股票创新高</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="../tables/mainMoney.html" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>主力资金</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
+</aside>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="col-sm-6">
+      <h1>查询股票价格创新高</h1>
+    </div>
+    <form>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <!-- /.card -->
+            <!-- Horizontal Form -->
+            <div class="card card-info">
+              <!-- /.card-header -->
+              <!-- form start -->
+              <div class="card-body">
+                <div class="form-group row">
+                  <label for="stockCode" class="col-sm-2 col-form-label">股票代码</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="stockCode" id="stockCode" placeholder="股票代码">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="stockName" class="col-sm-2 col-form-label">股票名称</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="stockName" id="stockName" placeholder="股票名称">
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label for="minCountTime" class="col-sm-2 col-form-label">最小时间</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" name="minCountTime" id="minCountTime" placeholder="最小时间">
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label for="maxCountTime" class="col-sm-2 col-form-label">最大时间</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" name="maxCountTime" id="maxCountTime" placeholder="最大时间">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="minStockChange" class="col-sm-2 col-form-label">当天最小涨幅</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" name="minStockChange" min="-20" max="20" value="5.0"
+                           id="minStockChange" step="0.01" placeholder="当天最小涨幅">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="maxStockChange" class="col-sm-2 col-form-label">当天最大涨幅</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.01" name="maxStockChange" min="-10" max="10"
+                           value="9.6"
+                           id="maxStockChange" placeholder="当天最大涨幅">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="minMainAmount" class="col-sm-2 col-form-label">最小主力资金(万元)</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.0001" name="minMainAmount" value="3000"
+                           id="minMainAmount"
+                           placeholder="最小主力资金(万元)">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="minMainPre" class="col-sm-2 col-form-label">最小主力资金占比(%)</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.0001" name="minMainPre" value="10"
+                           id="minMainPre"
+                           placeholder="最小主力资金(万元)">
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label for="minBusinessAmount" class="col-sm-2 col-form-label">当天最小交易量(%)</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.0001" name="minBusinessAmount" value="10"
+                           id="minBusinessAmount"
+                           placeholder="当天最小交易量(万元)">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!-- /.card -->
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+            <!-- Form Element sizes -->
+            <div class="card card-info">
+              <!-- /.card-header -->
+              <!-- form start -->
+              <div class="card-body">
+
+
+                <div class="form-group row">
+                  <label for="removeCYB" class="col-sm-2 col-form-label">移除创业板</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="removeCYB" id="removeCYB">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="removeKCB" class="col-sm-2 col-form-label">移除科创板</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="removeKCB" id="removeKCB">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="removeST" class="col-sm-2 col-form-label">移除ST</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="removeST" id="removeST">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="queryThreeMainAmount" class="col-sm-2 col-form-label">是否查询三日主力资金</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="queryThreeMainAmount" id="queryThreeMainAmount">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="queryFiveMainAmount" class="col-sm-2 col-form-label">是否查询五日主力资金</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="queryFiveMainAmount" id="queryFiveMainAmount">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="queryNowMainAmountNum" class="col-sm-2 col-form-label">是否查询当天主力资金个数</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="queryNowMainAmountNum" id="queryNowMainAmountNum">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="queryStockChangeOverN" class="col-sm-2 col-form-label">查询当天大于N的股票</label>
+                  <div class="col-sm-10">
+                    <input type="number" step="0.01" class="form-control" name="queryStockChangeOverN" value="5"
+                           id="queryStockChangeOverN"
+                           placeholder="查询当天大于N的股票">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="maxYesBusAmountCmpNowBusAmount" class="col-sm-2 col-form-label">量比</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.01" name="maxYesBusAmountCmpNowBusAmount"
+                           value="1.5" id="maxYesBusAmountCmpNowBusAmount"
+                           placeholder="量比">
+                  </div>
+                </div>
+
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="button" id="submit" class="btn btn-info">查询</button>
+                <button type="reset" class="btn btn-default float-right">重置</button>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!--/.col (right) -->
+        </div>
+
+    </form>
+    <!-- /.row -->
+</div><!-- /.container-fluid -->
+
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+              <tr>
+                <th>股票名称</th>
+                <th>主力资金</th>
+                <th>主力资金占比</th>
+                <th>净额次数</th>
+                <th>当前市值</th>
+                <th>当前价格</th>
+                <th>上涨幅度</th>
+                <th>量比</th>
+                <th>三日主力资金</th>
+                <th>五日主力资金</th>
+                <th>板块主力资金</th>
+                <th>板块名称</th>
+                <th>统计时间</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script>
+
+
+    $(function () {
+
+
+        // 初始化表格
+        var dataTable = $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "ajax": {//ajax请求后台
+                "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/top/money",
+                "type": "get",
+                "timeout": 20000,
+                "dataType": "json"
+            },
+            "columns": [
+                {
+                    "data": function (data) {
+                        return "<a href='http://data.eastmoney.com/zjlx/" + data.stockCode + ".html' target='_blank'> " + data.stockName + "</a>"
+                    }
+                },
+                {"data": "mainNetInflowAmount"},
+                {"data": "mainNetProportion"},
+                {"data": "diffMoneyNum"},
+                {"data": "marketValue"},
+                {"data": "priceNew"},
+                {"data": "stockChange"},
+                {
+                    "data": function (data) {
+                        var num = data.businessAmount / data.preBusinessAmount;
+                        return num.toFixed(2); // 保留两位小数
+                    }
+                }, // 量比
+                {"data": "threeMainMoney"},
+                {"data": "fiveMainMoney"},
+                {"data": "sectionMainMoney"},
+                {"data": "sectionName"},
+                {"data": "countTime"}
+
+            ],
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+        });
+
+        $("#submit").click(function () {
+            var stockCode = $("#stockCode").val();
+            var stockName = $("#stockName").val();
+            var minCountTime = $("#minCountTime").val();
+            var maxCountTime = $("#maxCountTime").val();
+            var minStockChange = $("#minStockChange").val();
+            var maxStockChange = $("#maxStockChange").val();
+            var minMainAmount = $("#minMainAmount").val();
+            var minMainPre = $("#minMainPre").val();
+            var minBusinessAmount = $("#minBusinessAmount").val();
+            var removeCYB = $("#removeCYB").val();
+            var removeKCB = $("#removeKCB").val();
+            var removeST = $("#removeST").val();
+            var queryThreeMainAmount = $("#queryThreeMainAmount").val();
+            var queryFiveMainAmount = $("#queryFiveMainAmount").val();
+            var queryNowMainAmountNum = $("#queryNowMainAmountNum").val();
+            var queryStockChangeOverN = $("#queryStockChangeOverN").val();
+            var maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val();
+
+            $.ajax({
+                "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/top/money",
+                "type": "get",
+                "timeout": 20000,
+                "dataType": "json",
+                "data": {
+                    "stockCode": stockCode,
+                    "stockName": stockName,
+                    "minCountTime": minCountTime,
+                    "maxCountTime": maxCountTime,
+                    "minStockChange": minStockChange,
+                    "maxStockChange": maxStockChange,
+                    "minMainAmount": minMainAmount,
+                    "minMainPre": minMainPre,
+                    "minBusinessAmount": minBusinessAmount,
+                    "removeCYB": removeCYB,
+                    "removeKCB": removeKCB,
+                    "removeST": removeST,
+                    "queryThreeMainAmount": queryThreeMainAmount,
+                    "queryFiveMainAmount": queryFiveMainAmount,
+                    "queryNowMainAmountNum": queryNowMainAmountNum,
+                    "queryStockChangeOverN": queryStockChangeOverN,
+                    "maxYesBusAmountCmpNowBusAmount": maxYesBusAmountCmpNowBusAmount
+                },
+                "success": function (data) {
+                    if (data != null) {
+                        console.log("data : " + data);
+                        dataTable.data(data);
+                    }
+                }
+            })
+        })
+    });
+</script>
+</body>
+</html>

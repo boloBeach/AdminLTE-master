@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | DataTables</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="../../index3.html" class="brand-link">
+      <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">股票筛选系统</span>
+    </a>
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                股票信息
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../tables/topMoney.html" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>股票创新高</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../tables/mainMoney.html" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>主力资金</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="col-sm-6">
+        <h1>查询主力资金</h1>
+      </div>
+      <form>
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+              <!-- general form elements -->
+              <!-- /.card -->
+              <!-- Horizontal Form -->
+              <div class="card card-info">
+                <!-- /.card-header -->
+                <!-- form start -->
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="stockCode" class="col-sm-2 col-form-label">股票代码</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="stockCode" id="stockCode" placeholder="股票代码">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="stockName" class="col-sm-2 col-form-label">股票名称</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="stockName" id="stockName" placeholder="股票名称">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label for="minCountTime" class="col-sm-2 col-form-label">最小时间</label>
+                    <div class="col-sm-10">
+                      <input type="date" class="form-control" name="minCountTime" id="minCountTime" placeholder="最小时间">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label for="maxCountTime" class="col-sm-2 col-form-label">最大时间</label>
+                    <div class="col-sm-10">
+                      <input type="date" class="form-control" name="maxCountTime" id="maxCountTime" placeholder="最大时间">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="minStockChange" class="col-sm-2 col-form-label">当天最小涨幅</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" name="minStockChange" min="-20" max="20" value="5.0"
+                             id="minStockChange" step="0.01" placeholder="当天最小涨幅">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="maxStockChange" class="col-sm-2 col-form-label">当天最大涨幅</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" step="0.01" name="maxStockChange" min="-10" max="10"
+                             value="9.6"
+                             id="maxStockChange" placeholder="当天最大涨幅">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="minMainAmount" class="col-sm-2 col-form-label">最小主力资金(万元)</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" step="0.0001" name="minMainAmount" value="3000"
+                             id="minMainAmount"
+                             placeholder="最小主力资金(万元)">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="minMainPre" class="col-sm-2 col-form-label">最小主力资金占比(%)</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" step="0.0001" name="minMainPre" value="10"
+                             id="minMainPre"
+                             placeholder="最小主力资金(万元)">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label for="minBusinessAmount" class="col-sm-2 col-form-label">当天最小交易量(%)</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" step="0.0001" name="minBusinessAmount" value="10"
+                             id="minBusinessAmount"
+                             placeholder="当天最小交易量(万元)">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- /.card -->
+
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+              <!-- Form Element sizes -->
+              <div class="card card-info">
+                <!-- /.card-header -->
+                <!-- form start -->
+                <div class="card-body">
+
+
+                  <div class="form-group row">
+                    <label for="removeCYB" class="col-sm-2 col-form-label">移除创业板</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="removeCYB" id="removeCYB">
+                        <option selected>是</option>
+                        <option>否</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="removeKCB" class="col-sm-2 col-form-label">移除科创板</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="removeKCB" id="removeKCB">
+                        <option selected>是</option>
+                        <option>否</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="removeST" class="col-sm-2 col-form-label">移除ST</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="removeST" id="removeST">
+                        <option selected>是</option>
+                        <option>否</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="queryThreeMainAmount" class="col-sm-2 col-form-label">是否查询三日主力资金</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="queryThreeMainAmount" id="queryThreeMainAmount">
+                        <option selected>是</option>
+                        <option>否</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="queryFiveMainAmount" class="col-sm-2 col-form-label">是否查询五日主力资金</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="queryFiveMainAmount" id="queryFiveMainAmount">
+                        <option selected>是</option>
+                        <option>否</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="queryStockChangeOverN" class="col-sm-2 col-form-label">查询当天大于N的股票</label>
+                    <div class="col-sm-10">
+                      <input type="number" step="0.01" class="form-control" name="queryStockChangeOverN" value="5"
+                             id="queryStockChangeOverN"
+                             placeholder="查询当天大于N的股票">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="maxYesBusAmountCmpNowBusAmount" class="col-sm-2 col-form-label">量比</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" step="0.01" name="maxYesBusAmountCmpNowBusAmount"
+                             value="1.5" id="maxYesBusAmountCmpNowBusAmount"
+                             placeholder="量比">
+                    </div>
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">查询</button>
+                  <button type="submit" class="btn btn-default float-right">重置</button>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+            <!--/.col (right) -->
+          </div>
+
+      </form>
+      <!-- /.row -->
+  </div><!-- /.container-fluid -->
+
+
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>股票名称</th>
+                  <th>主力资金</th>
+                  <th>主力资金占比</th>
+                  <th>净额次数</th>
+                  <th>当前市值</th>
+                  <th>当前价格</th>
+                  <th>上涨幅度</th>
+                  <th>量比</th>
+                  <th>三日主力资金</th>
+                  <th>五日主力资金</th>
+                  <th>板块主力资金</th>
+                  <th>板块名称</th>
+                  <th>统计时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td> 4</td>
+                  <td>X</td>
+
+                  <td>Win 95+</td>
+                  <td> 4</td>
+                  <td>X</td>
+                  <td> 4</td>
+                  <td>X</td>
+                  <td>X</td>
+                  <td> 4</td>
+                  <td>X</td>
+                </tr>
+
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td> 4</td>
+                  <td>X</td>
+
+                  <td>Win 95+</td>
+                  <td> 4</td>
+                  <td>X</td>
+                  <td> 4</td>
+                  <td>X</td>
+                  <td>X</td>
+                  <td> 4</td>
+                  <td>X</td>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plugins/jszip/jszip.min.js"></script>
+<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "language": {
+        "processing": "DataTables is currently busy",
+        // 当前页显示多少条
+        "lengthMenu": "Display _MENU_ records",
+        // _START_（当前页的第一条的序号） ,_END_（当前页的最后一条的序号）,_TOTAL_（筛选后的总件数）,
+        // _MAX_(总件数),_PAGE_(当前页号),_PAGES_（总页数）
+        "info": "Showing page _PAGE_ of _PAGES_",
+        // 没有数据的显示（可选），如果没指定，会用zeroRecords的内容
+        "emptyTable": "无数据",
+        // 筛选后，没有数据的表示信息，注意emptyTable优先级更高
+        "zeroRecords": "无记录",
+        // 千分位的符号，只对显示有效，默认就是","  一般不要改写
+        //"thousands": "'",
+        // 小数点位的符号，对输入解析有影响，默认就是"." 一般不要改写
+        //"decimal": "-",
+        // 翻页按钮文字控制
+        "paginate": {
+          "first": "首页",
+          "last": "最后一页",
+          "next": "下一页",
+          "previous": "上一页"
+        },
+        // Client-Side用，Server-Side不用这个属性
+        "loadingRecords": "Please wait - loading..."
+      }
+    });
+  });
+</script>
+</body>
+</html>
