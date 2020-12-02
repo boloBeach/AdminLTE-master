@@ -203,6 +203,17 @@
                 </div>
 
                 <div class="form-group row">
+                  <label for="queryScope" class="col-sm-2 col-form-label">查询范围</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="queryScope" id="queryScope">
+                      <option selected value="">全部</option>
+                      <option value="true">创新高</option>
+                      <option value="false">涨幅大于N</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
                   <label for="queryThreeMainAmount" class="col-sm-2 col-form-label">是否查询三日主力资金</label>
                   <div class="col-sm-10">
                     <select class="form-control" name="queryThreeMainAmount" id="queryThreeMainAmount">
@@ -353,6 +364,7 @@
         var dataTable = $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
+            "pageLength": 50,
             "searching": false,
             "ordering": true,
             "info": true,
@@ -362,7 +374,39 @@
                 "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/top/money",
                 "type": "get",
                 "timeout": 20000,
-                "dataType": "json"
+                "dataType": "json",
+                "data": function (d) {
+                    d.stockCode = $("#stockCode").val(),
+                        d.stockName = $("#stockName").val(),
+                        d.minCountTime = $("#minCountTime").val(),
+                        d.maxCountTime = $("#maxCountTime").val(),
+                        d.minStockChange = $("#minStockChange").val(),
+                        d.maxStockChange = $("#maxStockChange").val(),
+                        d.minMainAmount = $("#minMainAmount").val(),
+                        d.minMainPre = $("#minMainPre").val(),
+                        d.minBusinessAmount = $("#minBusinessAmount").val(),
+                        d.removeCYB = $("#removeCYB").val(),
+                        d.removeKCB = $("#removeKCB").val(),
+                        d.removeST = $("#removeST").val(),
+                        d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
+                        d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
+                        d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
+                        d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
+                        d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
+                        d.queryScope = $("#queryScope").val()
+                }
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
+                //如果当天三日内的主力资金小于当天主力，并且五日内主力资金远远小于三日主力资金(至少1.5倍）则高亮
+                var mainMainMoney = aData.mainNetInflowAmount;
+                var threeMainMoney = aData.threeMainMoney;
+                var fiveMainMoney = aData.fiveMainMoney;
+                if (mainMainMoney > threeMainMoney && (threeMainMoney - fiveMainMoney) > threeMainMoney / 2) {
+                    //设置满足条件行的背景颜色
+                    $(nRow).css("background", "red");
+                    //设置满足条件行的字体颜色
+                    $(nRow).css("color", "black");
+                }
             },
             "columns": [
                 {
@@ -416,56 +460,7 @@
         });
 
         $("#submit").click(function () {
-            var stockCode = $("#stockCode").val();
-            var stockName = $("#stockName").val();
-            var minCountTime = $("#minCountTime").val();
-            var maxCountTime = $("#maxCountTime").val();
-            var minStockChange = $("#minStockChange").val();
-            var maxStockChange = $("#maxStockChange").val();
-            var minMainAmount = $("#minMainAmount").val();
-            var minMainPre = $("#minMainPre").val();
-            var minBusinessAmount = $("#minBusinessAmount").val();
-            var removeCYB = $("#removeCYB").val();
-            var removeKCB = $("#removeKCB").val();
-            var removeST = $("#removeST").val();
-            var queryThreeMainAmount = $("#queryThreeMainAmount").val();
-            var queryFiveMainAmount = $("#queryFiveMainAmount").val();
-            var queryNowMainAmountNum = $("#queryNowMainAmountNum").val();
-            var queryStockChangeOverN = $("#queryStockChangeOverN").val();
-            var maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val();
-
-            $.ajax({
-                "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/top/money",
-                "type": "get",
-                "timeout": 20000,
-                "dataType": "json",
-                "data": {
-                    "stockCode": stockCode,
-                    "stockName": stockName,
-                    "minCountTime": minCountTime,
-                    "maxCountTime": maxCountTime,
-                    "minStockChange": minStockChange,
-                    "maxStockChange": maxStockChange,
-                    "minMainAmount": minMainAmount,
-                    "minMainPre": minMainPre,
-                    "minBusinessAmount": minBusinessAmount,
-                    "removeCYB": removeCYB,
-                    "removeKCB": removeKCB,
-                    "removeST": removeST,
-                    "queryThreeMainAmount": queryThreeMainAmount,
-                    "queryFiveMainAmount": queryFiveMainAmount,
-                    "queryNowMainAmountNum": queryNowMainAmountNum,
-                    "queryStockChangeOverN": queryStockChangeOverN,
-                    "maxYesBusAmountCmpNowBusAmount": maxYesBusAmountCmpNowBusAmount
-                },
-                "success": function (data) {
-                    if (data != null) {
-                        console.log("data : " + data);
-                        dataTable.clear(); // 清楚数据
-                        dataTable.data(data);
-                    }
-                }
-            })
+            dataTable.ajax.reload();
         })
     });
 </script>
