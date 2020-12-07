@@ -261,6 +261,16 @@
                   </div>
                 </div>
 
+                <div class="form-group row">
+                  <label for="queryForeignAmount" class="col-sm-2 col-form-label">是否外资资金</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" name="queryForeignAmount" id="queryForeignAmount">
+                      <option selected value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                </div>
+
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
@@ -301,8 +311,9 @@
                 <th>量比</th>
                 <th>三日主力资金</th>
                 <th>五日主力资金</th>
-                <th>板块主力资金</th>
-                <th>板块名称</th>
+                <th>昨日外资净资金</th>
+                <th>三日外资净资金</th>
+                <th>五日外资净资金</th>
                 <th>统计时间</th>
               </tr>
               </thead>
@@ -393,7 +404,8 @@
                         d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
                         d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
                         d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
-                        d.queryScope = $("#queryScope").val()
+                        d.queryScope = $("#queryScope").val(),
+                        d.queryForeignAmount = $("#queryForeignAmount").val()
                 }
             },
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
@@ -428,8 +440,9 @@
                 }, // 量比
                 {"data": "threeMainMoney"},
                 {"data": "fiveMainMoney"},
-                {"data": "sectionMainMoney"},
-                {"data": "sectionName"},
+                {"data": "yesterdayForeignMoney"},
+                {"data": "threeForeignMoney"},
+                {"data": "fiveForeignMoney"},
                 {"data": "countTime"}
 
             ],
