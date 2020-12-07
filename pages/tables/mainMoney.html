@@ -369,7 +369,11 @@
                         return "<a href='http://data.eastmoney.com/zjlx/" + data.stockCode + ".html' target='_blank'> " + data.stockName + "</a>"
                     }
                 },
-                {"data": "mainNetInflowAmount"},
+                {
+                    "data": function (data) {
+                        return "<a href='http://stockpage.10jqka.com.cn/" + data.stockCode + "/funds/'  target='_blank'>" + data.mainNetInflowAmount + "</a>"
+                    }
+                },
                 {"data": "mainNetProportion"},
                 {"data": "diffMoneyNum"},
                 {"data": "marketValue"},
