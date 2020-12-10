@@ -155,11 +155,20 @@
 
 
                 <div class="form-group row">
-                  <label for="minBusinessAmount" class="col-sm-2 col-form-label">当天最小交易量(%)</label>
+                  <label for="minBusinessAmount" class="col-sm-2 col-form-label">当天最小交易量</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.0001" name="minBusinessAmount" value="10"
+                    <input type="number" class="form-control" step="10000" name="minBusinessAmount" value="10000"
                            id="minBusinessAmount"
                            placeholder="当天最小交易量(万元)">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label for="nowPriceCompMaxPrice" class="col-sm-2 col-form-label">价格和最高价格比</label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" step="0.01" max="1" name="nowPriceCompMaxPrice" value="0.96"
+                           id="nowPriceCompMaxPrice"
+                           placeholder="价格和最高价格比">
                   </div>
                 </div>
               </div>
