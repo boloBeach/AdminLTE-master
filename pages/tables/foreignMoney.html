@@ -228,11 +228,11 @@
                   <th>外资增持占比</th>
                   <th>外资持有市值</th>
                   <th>昨日外资增持比例</th>
-                  <td>昨日外资增持市值</td>
+                  <th>昨日外资增持股(万)</th>
                   <th>前天外资增持比例</th>
-                  <td>前天外资增持市值</td>
+                  <th>前天外资增持股(万)</th>
                   <th>上前天外资增持比例</th>
-                  <td>上前天外资增持市值</td>
+                  <th>上前天外资增持股(万)</th>
                   <th>统计时间</th>
                 </tr>
                 </thead>
@@ -334,7 +334,7 @@
             "columns": [
                 {
                     "data": function (data) {
-                        return "<a href='http://data.eastmoney.com/zjlx/" + data.stockCode + ".html' target='_blank'> " + data.stockName + "</a>"
+                        return "<a href='http://data.eastmoney.com/hsgtcg/StockHdStatistics.aspx?stock=" + data.stockCode +"'  target='_blank'> " + data.stockName + "</a>"
                     }
                 },
                 {
@@ -349,11 +349,11 @@
                 {"data": "foreignAllProp"},
                 {"data": "foreignAllMoney"},
                 {"data": "yesForeignProp"},
-                {"data": "yesForeignMoney"},
-                {"data": "towForeignMoney"},
+                {"data": "yesForeignNum"},
+                {"data": "towForeignNum"},
                 {"data": "towForeignProp"},
                 {"data": "threeForeignProp"},
-                {"data": "threeForeignMoney"},
+                {"data": "threeForeignNum"},
                 {"data": "countTime"}
 
 
