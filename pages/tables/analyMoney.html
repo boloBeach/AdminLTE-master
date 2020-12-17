@@ -113,7 +113,7 @@
                 <div class="form-group row">
                   <label for="day" class="col-sm-2 col-form-label">分析天数</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" name="day" id="day" placeholder="分析天数">
+                    <input type="number" class="form-control" name="day" value="5" id="day" placeholder="分析天数">
                   </div>
                 </div>
 
@@ -269,9 +269,9 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="queryNowMainAmountNum" class="col-sm-2 col-form-label">是否查询当天主力资金个数</label>
+                  <label for="queryNowMainDiffAmount" class="col-sm-2 col-form-label">是否查询当天主力资金个数</label>
                   <div class="col-sm-10">
-                    <select class="form-control" name="queryNowMainAmountNum" id="queryNowMainAmountNum">
+                    <select class="form-control" name="queryNowMainDiffAmount" id="queryNowMainDiffAmount">
                       <option selected value="true">是</option>
                       <option value="false">否</option>
                     </select>
@@ -438,7 +438,7 @@
                         d.removeST = $("#removeST").val(),
                         d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
                         d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
-                        d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
+                        d.queryNowMainDiffAmount = $("#queryNowMainDiffAmount").val(),
                         d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
                         d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
                         d.queryScope = $("#queryScope").val(),

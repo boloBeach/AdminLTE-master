@@ -173,7 +173,8 @@
                 <div class="form-group row">
                   <label for="nowPriceCompMaxPrice" class="col-sm-2 col-form-label">价格和最高价格比</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.01" max="1" name="nowPriceCompMaxPrice" value="0.96"
+                    <input type="number" class="form-control" step="0.01" max="1" name="nowPriceCompMaxPrice"
+                           value="0.96"
                            id="nowPriceCompMaxPrice"
                            placeholder="价格和最高价格比">
                   </div>
@@ -427,7 +428,8 @@
                         d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
                         d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
                         d.queryScope = $("#queryScope").val(),
-                        d.queryForeignAmount = $("#queryForeignAmount").val()
+                        d.queryForeignAmount = $("#queryForeignAmount").val(),
+                        d.nowPriceCompMaxPrice = $("#nowPriceCompMaxPrice").val()
                 }
             },
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
