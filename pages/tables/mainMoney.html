@@ -82,6 +82,7 @@
   <section class="content">
 
     <div class="col-sm-6">
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       <h1>查询主力资金</h1>
     </div>
     <div class="container-fluid">
@@ -271,6 +272,7 @@
                   <th>净额次数</th>
                   <th>当前市值</th>
                   <th>上涨幅度</th>
+                  <th>所属板块</th>
                   <th>三日主力资金</th>
                   <th>五日主力资金</th>
                   <th>当日港资流向</th>
@@ -391,6 +393,11 @@
                 {"data": "diffMoneyNum"},
                 {"data": "marketValue"},
                 {"data": "stockChange"},
+                {
+                    "data":function (data) {
+                        return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
+                    }
+                },
                 {"data": "threeMainMoney"},
                 {"data": "fiveMainMoney"},
                 {"data": "yesterdayForeignMoney"},

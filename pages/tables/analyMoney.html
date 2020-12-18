@@ -82,6 +82,7 @@
   <section class="content">
 
     <div class="col-sm-6">
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       <h1>通过数据分析股票信息</h1>
     </div>
     <form>
@@ -340,6 +341,7 @@
                 <th>主力资金</th>
                 <th>主力资金占比</th>
                 <th>净额次数</th>
+                <th>所属板块</th>
                 <th>当前市值</th>
                 <th>当前价格</th>
                 <th>上涨幅度</th>
@@ -438,7 +440,7 @@
                         d.removeST = $("#removeST").val(),
                         d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
                         d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
-                        d.queryNowMainDiffAmount = $("#queryNowMainDiffAmount").val(),
+                        d.queryNowMainAmountNum = $("#queryNowMainDiffAmount").val(),
                         d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
                         d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
                         d.queryScope = $("#queryScope").val(),
@@ -470,6 +472,11 @@
                 },
                 {"data": "mainNetProportion"},
                 {"data": "diffMoneyNum"},
+                {
+                    "data":function (data) {
+                        return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
+                    }
+                },
                 {"data": "marketValue"},
                 {"data": "priceNew"},
                 {"data": "stockChange"},
