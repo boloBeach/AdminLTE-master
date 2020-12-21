@@ -187,6 +187,7 @@
                     <select class="form-control" name="quickQuery" id="quickQuery">
                       <option selected value="">全部</option>
                       <option value="true">主力资金正估计为负数</option>
+                      <option value="top">创新高的股票</option>
                     </select>
                   </div>
                 </div>
@@ -407,12 +408,23 @@
      */
     $("#quickQuery").change(function () {
         var isTrue = $(this).find('option:selected').val()
+
+        // 主力资金为正数，股票为负数
         if (isTrue != null && isTrue) {
             $("#minStockChange").val("-10");
             $("#maxStockChange").val("0");
             $("#nowPriceCompMaxPrice").val("0.3");
             $("#minMainPre").val("1");
             $("#minMainAmount").val(100);
+        }
+
+        // 获取创新高的股票
+        if (isTrue != null && isTrue == 'top') {
+            $("#minStockChange").val("0");
+            $("#maxStockChange").val("20");
+            $("#minMainPre").val(null);
+            $("#minMainAmount").val(null);
+            $("#nowPriceCompMaxPrice").val("1");
         }
     })
 
@@ -428,6 +440,12 @@
             "ordering": true,
             "info": true,
             "autoWidth": false,
+            //表头固定
+            "fixedHeader": true,
+            "scrollX": "500px",
+            "scrollY": "560px",
+            "scrollCollapse": true,
+
             "responsive": true,
             "ajax": {//ajax请求后台
                 "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/top/money",
