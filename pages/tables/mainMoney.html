@@ -148,7 +148,7 @@
                 <div class="col-sm-10">
                   <input type="number" class="form-control" step="0.0001" name="minSumPreMainMoney" value="5"
                          id="minSumPreMainMoney"
-                         placeholder="主力资金(万元)">
+                         placeholder="主力资金占比(%)">
                 </div>
               </div>
             </div>
@@ -272,6 +272,7 @@
                   <th>净额次数</th>
                   <th>当前市值</th>
                   <th>上涨幅度</th>
+                  <th>量比</th>
                   <th>所属板块</th>
                   <th>三日主力资金</th>
                   <th>五日主力资金</th>
@@ -394,7 +395,13 @@
                 {"data": "marketValue"},
                 {"data": "stockChange"},
                 {
-                    "data":function (data) {
+                    "data": function (data) {
+                        var num = data.businessAmount / data.preBusinessAmount;
+                        return num.toFixed(2); // 保留两位小数
+                    }
+                }, // 量比
+                {
+                    "data": function (data) {
                         return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
                     }
                 },
