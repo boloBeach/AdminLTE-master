@@ -339,6 +339,7 @@
                 <th>股票名称</th>
                 <th>主力资金</th>
                 <th>主力资金占比</th>
+                <th>同花顺资金</th>
                 <th>净额次数</th>
                 <th>所属板块</th>
                 <th>当前市值</th>
@@ -499,6 +500,11 @@
                     }
                 },
                 {"data": "mainNetProportion"},
+                {
+                    "data": function (data) {
+                        return (data.inflowAmount / 10000).toFixed(2)
+                    }
+                },
                 {"data": "diffMoneyNum"},
                 {
                     "data": function (data) {

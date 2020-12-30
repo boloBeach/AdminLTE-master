@@ -269,6 +269,7 @@
                   <th>股票名称</th>
                   <th>主力资金</th>
                   <th>主力资金占比</th>
+                  <th>同花顺资金</th>
                   <th>净额次数</th>
                   <th>当前市值</th>
                   <th>上涨幅度</th>
@@ -279,9 +280,6 @@
                   <th>当日港资流向</th>
                   <td>三日港资流向</td>
                   <td>五日港资流向</td>
-                  <th>一个月内最低价</th>
-                  <th>一个月内最高价</th>
-                  <th>统计时间</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -397,6 +395,11 @@
                     }
                 },
                 {"data": "mainNetProportion"},
+                {
+                    "data": function (data) {
+                        return (data.inflowAmount / 10000).toFixed(2)
+                    }
+                },
                 {"data": "diffMoneyNum"},
                 {"data": "marketValue"},
                 {"data": "stockChange"},
@@ -415,11 +418,7 @@
                 {"data": "fiveMainMoney"},
                 {"data": "yesterdayForeignMoney"},
                 {"data": "threeForeignMoney"},
-                {"data": "fiveForeignMoney"},
-                {"data": "minPrice"},
-                {"data": "maxPrice"},
-                {"data": "countTime"}
-
+                {"data": "fiveForeignMoney"}
 
             ],
             "language": {
