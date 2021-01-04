@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>分析股价</title>
+  <title>涨停选股</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -66,6 +66,7 @@
                 <p>分析股价</p>
               </a>
             </li>
+
             <li class="nav-item">
               <a href="../tables/ztMoney.html" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
@@ -89,7 +90,7 @@
 
     <div class="col-sm-6">
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      <h1>通过数据分析股票信息</h1>
+      <h1>涨停选股</h1>
     </div>
     <form>
       <div class="container-fluid">
@@ -118,43 +119,51 @@
 
 
                 <div class="form-group row">
-                  <label for="day" class="col-sm-2 col-form-label">分析天数</label>
+                  <label for="minCountTime" class="col-sm-2 col-form-label">最小时间</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" name="day" value="5" id="day" placeholder="分析天数">
+                    <input type="date" class="form-control" name="minCountTime" id="minCountTime" placeholder="最小时间">
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <label for="maxCountTime" class="col-sm-2 col-form-label">最大时间</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" name="maxCountTime" id="maxCountTime" placeholder="最大时间">
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="sumMinStockChange" class="col-sm-2 col-form-label">最小涨幅</label>
+                  <label for="minStockChange" class="col-sm-2 col-form-label">当天最小涨幅</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" name="sumMinStockChange" min="-20" max="20" value="1.0"
-                           id="sumMinStockChange" step="0.01" placeholder="最小涨幅">
+                    <input type="number" class="form-control" name="minStockChange" min="-20" max="20" value="5.0"
+                           id="minStockChange" step="0.01" placeholder="当天最小涨幅">
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="sumMaxStockChange" class="col-sm-2 col-form-label">最大涨幅</label>
+                  <label for="maxStockChange" class="col-sm-2 col-form-label">当天最大涨幅</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.01" name="sumMaxStockChange" min="-10" max="10"
+                    <input type="number" class="form-control" step="0.01" name="maxStockChange" min="-10" max="10"
                            value="9.6"
-                           id="sumMaxStockChange" placeholder="最大涨幅">
+                           id="maxStockChange" placeholder="当天最大涨幅">
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="minSumMainMoney" class="col-sm-2 col-form-label">最小主力资金(万元)</label>
+                  <label for="minMainAmount" class="col-sm-2 col-form-label">最小主力资金(万元)</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.0001" name="minSumMainMoney" value="3000"
-                           id="minSumMainMoney"
+                    <input type="number" class="form-control" step="0.0001" name="minMainAmount" value="3000"
+                           id="minMainAmount"
                            placeholder="最小主力资金(万元)">
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label for="minSumPreMainMoney" class="col-sm-2 col-form-label">最小主力资金占比(%)</label>
+                  <label for="minMainPre" class="col-sm-2 col-form-label">最小主力资金占比(%)</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.0001" name="minSumPreMainMoney" value="10"
-                           id="minSumPreMainMoney"
+                    <input type="number" class="form-control" step="0.0001" name="minMainPre" value="10"
+                           id="minMainPre"
                            placeholder="最小主力资金(万元)">
                   </div>
                 </div>
@@ -180,22 +189,13 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="nowBusAmountCompYesBusAmount" class="col-sm-2 col-form-label">昨天和今天交易量占比</label>
+                  <label for="quickQuery" class="col-sm-2 col-form-label">快捷查询</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.01" max="1" name="nowBusAmountCompYesBusAmount"
-                           value="0.65"
-                           id="nowBusAmountCompYesBusAmount"
-                           placeholder="昨天和今天交易量占比">
-                  </div>
-                </div>
-
-                <div class="form-group row">
-                  <label for="nowMainMoneyCompAllAmount" class="col-sm-2 col-form-label">资金净流出占比</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" step="0.01" max="1" name="nowMainMoneyCompAllAmount"
-                           value="0.35"
-                           id="nowMainMoneyCompAllAmount"
-                           placeholder="资金净流出占比">
+                    <select class="form-control" name="quickQuery" id="quickQuery">
+                      <option selected value="">全部</option>
+                      <option value="true">主力资金正估计为负数</option>
+                      <option value="top">创新高的股票</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -276,9 +276,9 @@
                 </div>
 
                 <div class="form-group row">
-                  <label for="queryNowMainDiffAmount" class="col-sm-2 col-form-label">是否查询当天主力资金个数</label>
+                  <label for="queryNowMainAmountNum" class="col-sm-2 col-form-label">是否查询当天主力资金个数</label>
                   <div class="col-sm-10">
-                    <select class="form-control" name="queryNowMainDiffAmount" id="queryNowMainDiffAmount">
+                    <select class="form-control" name="queryNowMainAmountNum" id="queryNowMainAmountNum">
                       <option selected value="true">是</option>
                       <option value="false">否</option>
                     </select>
@@ -346,6 +346,7 @@
                 <th>股票名称</th>
                 <th>主力资金</th>
                 <th>主力资金占比</th>
+                <th>同花顺资金</th>
                 <th>净额次数</th>
                 <th>所属板块</th>
                 <th>当前市值</th>
@@ -410,6 +411,30 @@
 <!-- Page specific script -->
 <script>
 
+    /**
+     * 如果主力资金为正数，
+     */
+    $("#quickQuery").change(function () {
+        var isTrue = $(this).find('option:selected').val()
+
+        // 主力资金为正数，股票为负数
+        if (isTrue != null && isTrue) {
+            $("#minStockChange").val("-10");
+            $("#maxStockChange").val("0");
+            $("#nowPriceCompMaxPrice").val("0.3");
+            $("#minMainPre").val("1");
+            $("#minMainAmount").val(100);
+        }
+
+        // 获取创新高的股票
+        if (isTrue != null && isTrue == 'top') {
+            $("#minStockChange").val("0");
+            $("#maxStockChange").val("20");
+            $("#minMainPre").val(null);
+            $("#minMainAmount").val(null);
+            $("#nowPriceCompMaxPrice").val("1");
+        }
+    })
 
     $(function () {
 
@@ -422,42 +447,40 @@
             "searching": false,
             "ordering": true,
             "info": true,
-
+            "autoWidth": false,
             //表头固定
             "fixedHeader": true,
             "scrollX": "500px",
             "scrollY": "560px",
             "scrollCollapse": true,
 
-            "autoWidth": false,
             "responsive": true,
             "ajax": {//ajax请求后台
-                "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/top/analyse/money",
+                "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web//query/top/change/stock",
                 "type": "get",
                 "timeout": 20000,
                 "dataType": "json",
                 "data": function (d) {
                     d.stockCode = $("#stockCode").val(),
                         d.stockName = $("#stockName").val(),
-                        d.day = $("#day").val(),
-                        d.sumMinStockChange = $("#sumMinStockChange").val(),
-                        d.sumMaxStockChange = $("#sumMaxStockChange").val(),
-                        d.minSumMainMoney = $("#minSumMainMoney").val(),
-                        d.minSumPreMainMoney = $("#minSumPreMainMoney").val(),
+                        d.minCountTime = $("#minCountTime").val(),
+                        d.maxCountTime = $("#maxCountTime").val(),
+                        d.minStockChange = $("#minStockChange").val(),
+                        d.maxStockChange = $("#maxStockChange").val(),
+                        d.minMainAmount = $("#minMainAmount").val(),
+                        d.minMainPre = $("#minMainPre").val(),
                         d.minBusinessAmount = $("#minBusinessAmount").val(),
-                        d.nowPriceCompMaxPrice = $("#nowPriceCompMaxPrice").val(),
-                        d.nowBusAmountCompYesBusAmount = $("#nowBusAmountCompYesBusAmount").val(),
-                        d.nowMainMoneyCompAllAmount = $("#nowMainMoneyCompAllAmount").val(),
                         d.removeCYB = $("#removeCYB").val(),
                         d.removeKCB = $("#removeKCB").val(),
                         d.removeST = $("#removeST").val(),
                         d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
                         d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
-                        d.queryNowMainAmountNum = $("#queryNowMainDiffAmount").val(),
+                        d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
                         d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
                         d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
                         d.queryScope = $("#queryScope").val(),
-                        d.queryForeignAmount = $("#queryForeignAmount").val()
+                        d.queryForeignAmount = $("#queryForeignAmount").val(),
+                        d.nowPriceCompMaxPrice = $("#nowPriceCompMaxPrice").val()
                 }
             },
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
@@ -484,6 +507,11 @@
                     }
                 },
                 {"data": "mainNetProportion"},
+                {
+                    "data": function (data) {
+                        return (data.inflowAmount / 10000).toFixed(2)
+                    }
+                },
                 {"data": "diffMoneyNum"},
                 {
                     "data": function (data) {
@@ -504,7 +532,11 @@
                 {"data": "yesterdayForeignMoney"},
                 {"data": "threeForeignMoney"},
                 {"data": "fiveForeignMoney"},
-                {"data": "countTime"}
+                {
+                    "data": function (data) {
+                        return data.countTime.replace("00:00:00", "");
+                    }
+                }
 
             ],
             "language": {
