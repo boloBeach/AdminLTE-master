@@ -347,6 +347,8 @@
                 <th>主力资金</th>
                 <th>主力资金占比</th>
                 <th>净额次数</th>
+                <th>主力净额次数</th>
+                <th>推荐原因</th>
                 <th>所属板块</th>
                 <th>当前市值</th>
                 <th>当前价格</th>
@@ -355,8 +357,6 @@
                 <th>三日主力资金</th>
                 <th>五日主力资金</th>
                 <th>昨日外资净资金</th>
-                <th>三日外资净资金</th>
-                <th>五日外资净资金</th>
                 <th>统计时间</th>
               </tr>
               </thead>
@@ -485,6 +485,11 @@
                 },
                 {"data": "mainNetProportion"},
                 {"data": "diffMoneyNum"},
+
+                {"data": "mainMoneyNum"},
+                {
+                    "data": "msg"
+                },
                 {
                     "data": function (data) {
                         return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
@@ -502,8 +507,6 @@
                 {"data": "threeMainMoney"},
                 {"data": "fiveMainMoney"},
                 {"data": "yesterdayForeignMoney"},
-                {"data": "threeForeignMoney"},
-                {"data": "fiveForeignMoney"},
                 {"data": "countTime"}
 
             ],
