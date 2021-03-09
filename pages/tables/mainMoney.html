@@ -73,6 +73,13 @@
                 <p>涨停选股</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="../tables/convertMoney.html" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>债券资金</p>
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
@@ -168,6 +175,19 @@
                          placeholder="同花顺净资金">
                 </div>
               </div>
+
+
+              <div class="form-group row">
+                <label for="quickQuery" class="col-sm-2 col-form-label">快捷查询</label>
+                <div class="col-sm-10">
+                  <select class="form-control" name="quickQuery" id="quickQuery">
+                    <option selected value="">全部</option>
+                    <option value="true">获取所有股票信息</option>
+                    <option value="top">获取当天主力资金信息</option>
+                  </select>
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -347,6 +367,34 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
+
+
+    /**
+     * 如果主力资金为正数，
+     */
+    $("#quickQuery").change(function () {
+        var isTrue = $(this).find('option:selected').val()
+
+        // 主力资金为正数，股票为负数
+        if (isTrue != null && isTrue) {
+            $("#day").val("1");
+            $("#minStockChange").val("-20");
+            $("#minSumMainMoney").val("-100000");
+            $("#minSumPreMainMoney").val("-20");
+            $("#thsAmount").val("");
+        }
+
+        // 获取当天的主力资金
+        if (isTrue != null && isTrue == 'top') {
+            $("#day").val("1");
+            $("#minStockChange").val("-3");
+            $("#minSumMainMoney").val("-3000");
+            $("#minSumPreMainMoney").val("-5");
+            $("#thsAmount").val("");
+        }
+    })
+
+
     $(function () {
 
 
