@@ -525,7 +525,33 @@
                         return "<a href='http://stockpage.10jqka.com.cn/" + data.stockCode + "/funds/'  target='_blank'>" + data.mainNetInflowAmount + "</a>"
                     }
                 },
-                {"data": "mainNetProportion"},
+                {
+                    "data": function (data) {
+                        var code = data.stockCode;
+                        if (code.startsWith("002")) {
+                            code = "SZ" + code;
+                        }
+
+                        if (code.startsWith("300")) {
+                            code = "SZ" + code;
+                        }
+
+
+                        if (code.startsWith("000")) {
+                            code = "SZ" + code;
+                        }
+
+                        if (code.startsWith("60")) {
+                            code = "SH" + code;
+                        }
+
+                        if (code.startsWith("603")) {
+                            code = "SH" + code;
+                        }
+
+                        return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.mainNetProportion + "</a>";
+                    }
+                },
 
                 {
                     "data": function (data) {
