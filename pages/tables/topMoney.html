@@ -366,6 +366,7 @@
                 <th>同花顺资金占比</th>
                 <th>净额次数</th>
                 <th>主力资金净额次数</th>
+                <th>五日内涨停板个数</th>
                 <th>所属板块</th>
                 <th>当前市值</th>
                 <th>当前价格</th>
@@ -563,6 +564,7 @@
                 },
                 {"data": "diffMoneyNum"},
                 {"data": "mainMoneyNum"},
+                {"data":"topNum"},
                 {
                     "data": function (data) {
                         return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
