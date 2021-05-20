@@ -462,8 +462,31 @@
                         return num.toFixed(2); // 保留两位小数
                     }
                 }, // 量比
+              {
+                "data": function (data) {
+                  var code = data.stockCode;
+                  if (code.startsWith("300")) {
+                    console.log(data.stockBondDO);
+                    code = "SZ" + data.stockBondDO.bondCode;
+                  }
 
-              {"data": "stockBondDO.bondName"},
+
+                  if (code.startsWith("00")) {
+                    code = "SZ" + data.stockBondDO.bondCode;
+                  }
+
+                  if (code.startsWith("60")) {
+                    code = "SH" + data.stockBondDO.bondCode;
+                  }
+
+                  if (code.startsWith("603")) {
+                    code = "SH" + data.stockBondDO.bondCode;
+                  }
+
+                  return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.stockBondDO.bondName + "</a>";
+                }
+              },
+
               {"data": "stockBondDO.stockMoney"},
               {"data": "stockBondDO.bondChange"},
               {"data": "stockBondDO.bondMoney"},
