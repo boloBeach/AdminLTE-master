@@ -298,12 +298,15 @@
                   <th>当前市值</th>
                   <th>上涨幅度</th>
                   <th>量比</th>
+                  <th>债券名称</th>
+                  <th>债券金额(万)</th>
+                  <th>债券涨跌幅</th>
+                  <th>债券剩余规模(亿)</th>
                   <th>融资资金</th>
                   <th>所属板块</th>
                   <th>三日主力资金</th>
                   <th>五日主力资金</th>
                   <th>当日港资流向</th>
-                  <td>三日港资流向</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -354,8 +357,9 @@
 <script src="../../dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-    $(function () {
 
+    $.fn.dataTable.ext.errMode = 'none';
+    $(function () {
 
         // 初始化表格
         var dataTable = $('#example2').DataTable({
@@ -460,6 +464,37 @@
                 }, // 量比
                 {
                     "data": function (data) {
+                        var code = data.stockCode;
+                        var bondCode = data.stockBondDO.bondCode;
+                        var bondName = data.stockBondDO.bondName;
+                        console.log(bondCode);
+                        if (code.startsWith("300")) {
+                            code = "SZ" + bondCode;
+                        }
+
+
+                        if (code.startsWith("00")) {
+                            code = "SZ" + bondCode;
+                        }
+
+                        if (code.startsWith("60")) {
+                            code = "SH" + bondCode;
+                        }
+
+                        if (code.startsWith("603")) {
+                            code = "SH" + bondCode;
+                        }
+
+                        return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + bondName + "</a>";
+                    }
+
+                },
+
+                {"data": "stockBondDO.stockMoney"},
+                {"data": "stockBondDO.bondChange"},
+                {"data": "stockBondDO.bondMoney"},
+                {
+                    "data": function (data) {
                         var num = data.marginMoney / 10000;
                         return "<a href='http://data.eastmoney.com/rzrq/stock/" + data.stockCode + ".html' target='_blank'>" + num.toFixed(2) + "</a>"; // 保留两位小数
                     }
@@ -471,8 +506,7 @@
                 },
                 {"data": "threeMainMoney"},
                 {"data": "fiveMainMoney"},
-                {"data": "yesterdayForeignMoney"},
-                {"data": "threeForeignMoney"}
+                {"data": "yesterdayForeignMoney"}
 
             ],
             "language": {
