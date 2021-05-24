@@ -359,183 +359,191 @@
 <script>
 
   $.fn.dataTable.ext.errMode = 'none';
-    $(function () {
+  $(function () {
 
-        // 初始化表格
-        var dataTable = $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "pageLength": 50,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            //表头固定
-            "fixedHeader": true,
-            "scrollX": "500px",
-            "scrollY": "560px",
-            "scrollCollapse": true,
+    // 初始化表格
+    var dataTable = $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "pageLength": 50,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      //表头固定
+      "fixedHeader": true,
+      "scrollX": "500px",
+      "scrollY": "560px",
+      "scrollCollapse": true,
 
-            "autoWidth": false,
-            "responsive": true,
-            "ajax": {//ajax请求后台
-                "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/all/convert/debt",
-                "type": "get",
-                "timeout": 20000,
-                "dataType": "json",
-                "data": function (d) {
-                    d.stockCode = $("#stockCode").val(),
-                        d.stockName = $("#stockName").val(),
-                        d.day = $("#day").val(),
-                        d.sumMinStockChange = $("#minStockChange").val(),
-                        d.sumMaxStockChange = $("#maxStockChange").val(),
-                        d.minSumMainMoney = $("#minSumMainMoney").val(),
-                        d.minSumPreMainMoney = $("#minSumPreMainMoney").val(),
-                        d.removeCYB = $("#removeCYB").val(),
-                        d.removeKCB = $("#removeKCB").val(),
-                        d.removeST = $("#removeST").val(),
-                        d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
-                        d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
-                        d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
-                        d.queryForeignAmount = $("#queryForeignAmount").val(),
-                        d.thsAmount = $("#thsAmount").val()
-                }
-            },
-            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
-                //如果当天三日内的主力资金小于当天主力，并且五日内主力资金远远小于三日主力资金(至少1.5倍）则高亮
-                var mainMainMoney = aData.mainNetInflowAmount;
-                var threeMainMoney = aData.threeMainMoney;
-                var fiveMainMoney = aData.fiveMainMoney;
-                if (mainMainMoney > threeMainMoney && (threeMainMoney - fiveMainMoney) > threeMainMoney / 2) {
-                    //设置满足条件行的背景颜色
-                    $(nRow).css("background", "red");
-                    //设置满足条件行的字体颜色
-                    $(nRow).css("color", "black");
-                }
-            },
-            "columns": [
-                {
-                    "data": function (data) {
-                        return "<a href='http://data.eastmoney.com/zjlx/" + data.stockCode + ".html' target='_blank'> " + data.stockName + "</a>"
-                    }
-                },
-                {
-                    "data": function (data) {
-                        return "<a href='http://stockpage.10jqka.com.cn/" + data.stockCode + "/funds/'  target='_blank'>" + data.mainNetInflowAmount + "</a>"
-                    }
-                },
-                {
-                    "data": function (data) {
-                        var code = data.stockCode;
-                        if (code.startsWith("300")) {
-                            code = "SZ" + code;
-                        }
-
-
-                        if (code.startsWith("00")) {
-                            code = "SZ" + code;
-                        }
-
-                        if (code.startsWith("60")) {
-                            code = "SH" + code;
-                        }
-
-                        if (code.startsWith("603")) {
-                            code = "SH" + code;
-                        }
-
-                        return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.mainNetProportion + "</a>";
-                    }
-                },
-                {
-                    "data": function (data) {
-                        return (data.inflowAmount / 10000).toFixed(2)
-                    }
-                },
-                {"data": "diffMoneyNum"},
-
-                {"data": "mainMoneyNum"},
-                {"data": "marketValue"},
-                {"data": "stockChange"},
-                {
-                    "data": function (data) {
-                        var num = data.businessAmount / data.preBusinessAmount;
-                        return num.toFixed(2); // 保留两位小数
-                    }
-                }, // 量比
-              {
-                "data": function (data) {
-                  var code = data.stockCode;
-                  if (code.startsWith("300")) {
-                    console.log(data.stockBondDO);
-                    code = "SZ" + data.stockBondDO.bondCode;
-                  }
-
-
-                  if (code.startsWith("00")) {
-                    code = "SZ" + data.stockBondDO.bondCode;
-                  }
-
-                  if (code.startsWith("60")) {
-                    code = "SH" + data.stockBondDO.bondCode;
-                  }
-
-                  if (code.startsWith("603")) {
-                    code = "SH" + data.stockBondDO.bondCode;
-                  }
-
-                  return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.stockBondDO.bondName + "</a>";
-                }
-              },
-
-              {"data": "stockBondDO.stockMoney"},
-              {"data": "stockBondDO.bondChange"},
-              {"data": "stockBondDO.bondMoney"},
-                {
-                    "data": function (data) {
-                        var num = data.marginMoney / 10000;
-                        return "<a href='http://data.eastmoney.com/rzrq/stock/" + data.stockCode + ".html' target='_blank'>" + num.toFixed(2) + "</a>"; // 保留两位小数
-                    }
-                },
-                {
-                    "data": function (data) {
-                        return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
-                    }
-                },
-                {"data": "threeMainMoney"},
-                {"data": "fiveMainMoney"},
-                {"data": "yesterdayForeignMoney"}
-
-            ],
-            "language": {
-                "sProcessing": "处理中...",
-                "sLengthMenu": "显示 _MENU_ 项结果",
-                "sZeroRecords": "没有匹配结果",
-                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-                "sInfoPostFix": "",
-                "sSearch": "搜索:",
-                "sUrl": "",
-                "sEmptyTable": "表中数据为空",
-                "sLoadingRecords": "载入中...",
-                "sInfoThousands": ",",
-                "oPaginate": {
-                    "sFirst": "首页",
-                    "sPrevious": "上页",
-                    "sNext": "下页",
-                    "sLast": "末页"
-                },
-                "oAria": {
-                    "sSortAscending": ": 以升序排列此列",
-                    "sSortDescending": ": 以降序排列此列"
-                }
+      "autoWidth": false,
+      "responsive": true,
+      "ajax": {//ajax请求后台
+        "url": "http://127.0.0.1:8087//fund/shares/api/dfcf/web/query/all/convert/debt",
+        "type": "get",
+        "timeout": 20000,
+        "dataType": "json",
+        "data": function (d) {
+          d.stockCode = $("#stockCode").val(),
+            d.stockName = $("#stockName").val(),
+            d.day = $("#day").val(),
+            d.sumMinStockChange = $("#minStockChange").val(),
+            d.sumMaxStockChange = $("#maxStockChange").val(),
+            d.minSumMainMoney = $("#minSumMainMoney").val(),
+            d.minSumPreMainMoney = $("#minSumPreMainMoney").val(),
+            d.removeCYB = $("#removeCYB").val(),
+            d.removeKCB = $("#removeKCB").val(),
+            d.removeST = $("#removeST").val(),
+            d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
+            d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
+            d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
+            d.queryForeignAmount = $("#queryForeignAmount").val(),
+            d.thsAmount = $("#thsAmount").val()
+        }
+      },
+      "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
+        //如果当天三日内的主力资金小于当天主力，并且五日内主力资金远远小于三日主力资金(至少1.5倍）则高亮
+        var mainMainMoney = aData.mainNetInflowAmount;
+        var threeMainMoney = aData.threeMainMoney;
+        var fiveMainMoney = aData.fiveMainMoney;
+        if (mainMainMoney > threeMainMoney && (threeMainMoney - fiveMainMoney) > threeMainMoney / 2) {
+          //设置满足条件行的背景颜色
+          $(nRow).css("background", "red");
+          //设置满足条件行的字体颜色
+          $(nRow).css("color", "black");
+        }
+      },
+      "columns": [
+        {
+          "data": function (data) {
+            return "<a href='http://data.eastmoney.com/zjlx/" + data.stockCode + ".html' target='_blank'> " + data.stockName + "</a>"
+          }
+        },
+        {
+          "data": function (data) {
+            return "<a href='http://stockpage.10jqka.com.cn/" + data.stockCode + "/funds/'  target='_blank'>" + data.mainNetInflowAmount + "</a>"
+          }
+        },
+        {
+          "data": function (data) {
+            var code = data.stockCode;
+            if (code.startsWith("300")) {
+              code = "SZ" + code;
             }
-        });
 
-        $("#submit").click(function () {
-            dataTable.ajax.reload();
-        })
+
+            if (code.startsWith("00")) {
+              code = "SZ" + code;
+            }
+
+            if (code.startsWith("60")) {
+              code = "SH" + code;
+            }
+
+            if (code.startsWith("603")) {
+              code = "SH" + code;
+            }
+            if (code.startsWith("688")) {
+              code = "SH" + code;
+            }
+
+
+            return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.mainNetProportion + "</a>";
+          }
+        },
+        {
+          "data": function (data) {
+            return (data.inflowAmount / 10000).toFixed(2)
+          }
+        },
+        {"data": "diffMoneyNum"},
+
+        {"data": "mainMoneyNum"},
+        {"data": "marketValue"},
+        {"data": "stockChange"},
+        {
+          "data": function (data) {
+            var num = data.businessAmount / data.preBusinessAmount;
+            return num.toFixed(2); // 保留两位小数
+          }
+        }, // 量比
+        {
+          "data": function (data) {
+            var code = data.stockCode;
+            if (code.startsWith("300")) {
+              console.log(data.stockBondDO);
+              code = "SZ" + data.stockBondDO.bondCode;
+            }
+
+
+            if (code.startsWith("00")) {
+              code = "SZ" + data.stockBondDO.bondCode;
+            }
+
+            if (code.startsWith("60")) {
+              code = "SH" + data.stockBondDO.bondCode;
+            }
+
+            if (code.startsWith("603")) {
+              code = "SH" + data.stockBondDO.bondCode;
+            }
+
+            if (code.startsWith("688")) {
+              code = "SH" + data.stockBondDO.bondCode;
+            }
+
+            return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.stockBondDO.bondName + "</a>";
+          }
+        },
+
+        {"data": "stockBondDO.stockMoney"},
+        {"data": "stockBondDO.bondChange"},
+        {"data": "stockBondDO.bondMoney"},
+        {
+          "data": function (data) {
+            var num = data.marginMoney / 10000;
+            return "<a href='http://data.eastmoney.com/rzrq/stock/" + data.stockCode + ".html' target='_blank'>" + num.toFixed(2) + "</a>"; // 保留两位小数
+          }
+        },
+        {
+          "data": function (data) {
+            return "<a href='http://data.eastmoney.com/bkzj/" + data.sectionCode + ".html'  target='_blank'>" + data.sectionName + "</a>"
+          }
+        },
+        {"data": "threeMainMoney"},
+        {"data": "fiveMainMoney"},
+        {"data": "yesterdayForeignMoney"}
+
+      ],
+      "language": {
+        "sProcessing": "处理中...",
+        "sLengthMenu": "显示 _MENU_ 项结果",
+        "sZeroRecords": "没有匹配结果",
+        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+        "sInfoPostFix": "",
+        "sSearch": "搜索:",
+        "sUrl": "",
+        "sEmptyTable": "表中数据为空",
+        "sLoadingRecords": "载入中...",
+        "sInfoThousands": ",",
+        "oPaginate": {
+          "sFirst": "首页",
+          "sPrevious": "上页",
+          "sNext": "下页",
+          "sLast": "末页"
+        },
+        "oAria": {
+          "sSortAscending": ": 以升序排列此列",
+          "sSortDescending": ": 以降序排列此列"
+        }
+      }
     });
+
+    $("#submit").click(function () {
+      dataTable.ajax.reload();
+    })
+  });
 </script>
 </body>
 </html>
