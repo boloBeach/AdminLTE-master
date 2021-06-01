@@ -123,31 +123,6 @@
                 </div>
               </div>
 
-
-              <div class="form-group row">
-                <label for="day" class="col-sm-2 col-form-label">查询天数</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" name="day" value="2" id="day" placeholder="查询天数">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="minStockChange" class="col-sm-2 col-form-label">累计最小涨幅</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" name="minStockChange" min="-20" max="20" value="5.0"
-                         id="minStockChange" step="0.01" placeholder="累计最小涨幅">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="maxStockChange" class="col-sm-2 col-form-label">累计最大涨幅</label>
-                <div class="col-sm-10">
-                  <input type="number" class="form-control" step="0.01" name="maxStockChange" min="-10" max="15"
-                         value="9.6"
-                         id="maxStockChange" placeholder="累计最大涨幅">
-                </div>
-              </div>
-
               <div class="form-group row">
                 <label for="minSumMainMoney" class="col-sm-2 col-form-label">主力资金(万元)</label>
                 <div class="col-sm-10">
@@ -190,51 +165,10 @@
             <!-- form start -->
             <div class="card-body">
 
-
-              <div class="form-group row">
-                <label for="removeCYB" class="col-sm-2 col-form-label">移除创业板</label>
-                <div class="col-sm-10">
-                  <select class="form-control" name="removeCYB" id="removeCYB">
-                    <option selected value="true">是</option>
-                    <option value="false">否</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="removeKCB" class="col-sm-2 col-form-label">移除科创板</label>
-                <div class="col-sm-10">
-                  <select class="form-control" name="removeKCB" id="removeKCB">
-                    <option selected value="true">是</option>
-                    <option value="false">否</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="removeST" class="col-sm-2 col-form-label">移除ST</label>
-                <div class="col-sm-10">
-                  <select class="form-control" name="removeST" id="removeST">
-                    <option selected value="true">是</option>
-                    <option value="false">否</option>
-                  </select>
-                </div>
-              </div>
-
               <div class="form-group row">
                 <label for="queryThreeMainAmount" class="col-sm-2 col-form-label">是否查询三日主力资金</label>
                 <div class="col-sm-10">
                   <select class="form-control" name="queryThreeMainAmount" id="queryThreeMainAmount">
-                    <option selected value="true">是</option>
-                    <option value="false">否</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="queryFiveMainAmount" class="col-sm-2 col-form-label">是否查询五日主力资金</label>
-                <div class="col-sm-10">
-                  <select class="form-control" name="queryFiveMainAmount" id="queryFiveMainAmount">
                     <option selected value="true">是</option>
                     <option value="false">否</option>
                   </select>
@@ -258,6 +192,15 @@
                     <option selected value="true">是</option>
                     <option value="false">否</option>
                   </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="thsAmount" class="col-sm-2 col-form-label">债券最大规模(亿)</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" step="0.0001" name="convertMaxMoney" value="10"
+                         id="convertMaxMoney"
+                         placeholder="债券最大规模">
                 </div>
               </div>
             </div>
@@ -385,19 +328,13 @@
                 "data": function (d) {
                     d.stockCode = $("#stockCode").val(),
                         d.stockName = $("#stockName").val(),
-                        d.day = $("#day").val(),
-                        d.sumMinStockChange = $("#minStockChange").val(),
-                        d.sumMaxStockChange = $("#maxStockChange").val(),
                         d.minSumMainMoney = $("#minSumMainMoney").val(),
                         d.minSumPreMainMoney = $("#minSumPreMainMoney").val(),
-                        d.removeCYB = $("#removeCYB").val(),
-                        d.removeKCB = $("#removeKCB").val(),
-                        d.removeST = $("#removeST").val(),
                         d.queryThreeMainAmount = $("#queryThreeMainAmount").val(),
-                        d.queryFiveMainAmount = $("#queryFiveMainAmount").val(),
                         d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
                         d.queryForeignAmount = $("#queryForeignAmount").val(),
-                        d.thsAmount = $("#thsAmount").val()
+                        d.thsAmount = $("#thsAmount").val(),
+                        d.convertMaxMoney = $("#convertMaxMoney").val()
                 }
             },
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) { // 每一行的回调函数
