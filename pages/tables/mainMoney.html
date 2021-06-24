@@ -314,6 +314,8 @@
                   <th>上涨幅度</th>
                   <th>量比</th>
                   <th>融资资金</th>
+                  <th>融资正数</th>
+                  <th>五日融资资金</th>
                   <th>所属板块</th>
                   <th>三日主力资金</th>
                   <th>五日主力资金</th>
@@ -509,6 +511,12 @@
                         var num = data.marginMoney / 10000;
                         return "<a href='http://data.eastmoney.com/rzrq/stock/" + data.stockCode + ".html' target='_blank'>" + num.toFixed(2) + "</a>"; // 保留两位小数
                     }
+                },
+                {"data": "marignMoneyFiveNum"},
+                { "data": function (data) {
+                        var num = data.marignFiveMoney / 10000;
+                        return num; // 保留两位小数
+                  }
                 },
                 {
                     "data": function (data) {
