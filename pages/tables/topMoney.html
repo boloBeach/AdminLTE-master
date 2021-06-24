@@ -210,7 +210,7 @@
                     <select class="form-control" name="quickQuery" id="quickQuery">
                       <option selected value="">全部</option>
                       <option value="true">主力资金正估计为负数</option>
-                      <option value="top">创新高的股票</option>
+                      <option value="false">创新高的股票</option>
                     </select>
                   </div>
                 </div>
@@ -434,8 +434,7 @@
      * 如果主力资金为正数，
      */
     $("#quickQuery").change(function () {
-        var isTrue = $(this).find('option:selected').val()
-
+        var isTrue = $("#quickQuery").val();
         // 主力资金为正数，股票为负数
         if (isTrue != null && isTrue) {
             $("#minStockChange").val("-10");
@@ -446,7 +445,7 @@
         }
 
         // 获取创新高的股票
-        if (isTrue != null && isTrue == 'top') {
+        if (isTrue != null && isTrue == 'false') {
             $("#minStockChange").val("0");
             $("#maxStockChange").val("20");
             $("#minMainPre").val(null);
@@ -497,7 +496,7 @@
                         d.queryNowMainAmountNum = $("#queryNowMainAmountNum").val(),
                         d.queryStockChangeOverN = $("#queryStockChangeOverN").val(),
                         d.maxYesBusAmountCmpNowBusAmount = $("#maxYesBusAmountCmpNowBusAmount").val(),
-                        d.queryScope = $("#queryScope").val(),
+                        d.queryScope = $("#quickQuery").val(),
                         d.queryForeignAmount = $("#queryForeignAmount").val(),
                         d.nowPriceCompMaxPrice = $("#nowPriceCompMaxPrice").val(),
                         d.thsAmount = $("#thsAmount").val()
