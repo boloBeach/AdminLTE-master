@@ -306,6 +306,7 @@
                   <th>主力资金</th>
                   <th>主力资金占比</th>
                   <th>同花顺资金</th>
+                  <th>同花顺净额</th>
                   <th>净额次数</th>
                   <th>主力净额次数</th>
                   <th>尾盘次数</th>
@@ -471,22 +472,23 @@
 
                         if (code.startsWith("300")) {
                             code = "SZ" + code;
-                        }
-
-
-                        if (code.startsWith("00")) {
+                        }else if (code.startsWith("00")) {
                             code = "SZ" + code;
-                        }
-
-                        if (code.startsWith("60")) {
+                        }else if (code.startsWith("60")) {
+                            code = "SH" + code;
+                        }else if (code.startsWith("603")) {
+                            code = "SH" + code;
+                        }else if(code.startsWith("301")){
+                            code = "SZ" + code
+                        }else{
                             code = "SH" + code;
                         }
 
-                        if (code.startsWith("603")) {
-                            code = "SH" + code;
+                        if(code.startsWith("SH603") || code.startsWith("SZ300") || code.startsWith("SZ301") || code.startsWith("SH688")){
+                            return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank' style='color: coral'>" + data.mainNetProportion + "</a>";
+                        }else{
+                            return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.mainNetProportion + "</a>";
                         }
-
-                        return "<a href='https://xueqiu.com/S/" + code + "'  target='_blank'>" + data.mainNetProportion + "</a>";
                     }
                 },
                 {
@@ -494,6 +496,7 @@
                         return (data.inflowAmount / 10000).toFixed(2)
                     }
                 },
+                {"data": "fiveThsOverMoney"},
                 {"data": "diffMoneyNum"},
                 {"data": "mainMoneyNum"},
                 {"data": "diffMoneyAfterNum"},
